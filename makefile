@@ -1,0 +1,37 @@
+create:
+	python3 -m venv .venv
+
+active:
+	@echo "Run: source .venv/bin/activate"
+
+deactivate:
+	@echo "Run: deactivate"
+
+save-requirements:
+	@echo "Run: pip freeze > requirements.txt"
+	pip freeze > requirements.txt
+
+migrate:
+	@echo "Run: python manage.py migrate"
+	python manage.py migrate
+
+create-admin:
+	@echo "Run: python manage.py createsuperuser"
+	python manage.py createsuperuser --username admin --email admin@example.com
+
+run-server:
+	@echo "Run: python manage.py runserver"
+	python manage.py runserver
+
+shell:
+	@echo "Run: python manage.py shell"
+	python manage.py shell
+
+# snippets
+makemigrate-snippets:
+	@echo "Run: python manage.py makemigrations snippets"
+	python manage.py makemigrations snippets
+
+migrate-snippets:
+	@echo "Run: python manage.py migrate snippets"
+	python manage.py migrate snippets

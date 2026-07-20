@@ -1,0 +1,6 @@
+# dependencies
+.venv
+
+*.sqlite3
+
+.env
