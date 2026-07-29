@@ -11,6 +11,10 @@ save-requirements:
 	@echo "Run: pip freeze > requirements.txt"
 	pip freeze > requirements.txt
 
+install-requirements:
+	@echo "Run: pip install -r requirements.txt"
+	pip install -r requirements.txt
+
 migrate:
 	@echo "Run: python manage.py migrate"
 	python manage.py migrate

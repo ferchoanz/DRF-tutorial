@@ -4,3 +4,6 @@
 *.sqlite3
 
 .env
+
+# cache compiled bytecode files
+*/__pycache__/
