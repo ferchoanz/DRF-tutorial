@@ -32,6 +32,11 @@ shell:
 	python manage.py shell
 
 # snippets
+
+startapp-snippets:
+	@echo "Run: python manage.py startapp snippets"
+	python manage.py startapp snippets
+
 makemigrate-snippets:
 	@echo "Run: python manage.py makemigrations snippets"
 	python manage.py makemigrations snippets
