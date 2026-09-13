@@ -62,6 +62,10 @@ docker-down:
 	@echo "Run: docker compose down"
 	docker compose down
 
+docker-stop:
+	@echo "Run: docker compose stop"
+	docker compose stop
+
 docker-restart:
 	@echo "Run: docker compose restart"
 	docker compose restart
