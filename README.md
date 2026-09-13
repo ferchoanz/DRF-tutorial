@@ -14,6 +14,7 @@ Proyecto de aprendizaje basado en el tutorial oficial de Django REST Framework (
 
 - Python 3.10 o superior
 - `pip` actualizado
+- Docker y Docker Compose (opcional, para ejecutar con contenedores)
 
 ## Instalación
 
@@ -51,6 +52,36 @@ python manage.py runserver
 
 La aplicación estará disponible en `http://127.0.0.1:8000/`.
 
+### Opción 2: con Docker (recomendado para desarrollo)
+
+1. Construir la imagen:
+
+```bash
+docker compose build
+```
+
+2. Levantar el contenedor:
+
+```bash
+docker compose up -d
+```
+
+El contenedor aplica las migraciones automáticamente y expone la aplicación en `http://127.0.0.1:8000/`.
+
+3. Ver logs:
+
+```bash
+docker compose logs -f
+```
+
+4. Detener el entorno:
+
+```bash
+docker compose down
+```
+
+> El volumen `.:/app` en `docker-compose.yml` monta el código fuente local dentro del contenedor, por lo que los cambios que hagas en el código se reflejan inmediatamente gracias al recargador de Django (`StatReloader`).
+
 ## Estructura del proyecto
 
 ```
@@ -63,6 +94,9 @@ DRF-tutorial/
 │   ├── settings.py
 │   ├── urls.py
 │   └── wsgi.py / asgi.py
+├── Dockerfile                  # Imagen base de la aplicación
+├── docker-compose.yml          # Orquestación del entorno de desarrollo
+├── .dockerignore               # Archivos ignorados por Docker
 ├── manage.py
 ├── requirements.txt
 ├── makefile
@@ -95,8 +129,8 @@ App del tutorial de serializadores de DRF. Contiene el modelo `Snippet` y dos se
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
 | GET / POST | `/` | Raíz de la API (router del quickstart) |
-| GET / POST | `/api/products/` | Listar / crear productos |
-| GET / PUT / PATCH / DELETE | `/api/products/<id>/` | Detalle, actualizar o eliminar un producto |
+| GET / POST | `/api/products` | Listar / crear productos |
+| GET / PUT / PATCH / DELETE | `/api/products/<id>` | Detalle, actualizar o eliminar un producto |
 | GET / POST | `/users/` | Listar / crear usuarios (requiere autenticación) |
 | GET / POST | `/groups/` | Listar / crear grupos (requiere autenticación) |
 | GET / POST | `/api-auth/login/` | URLs de autenticación de DRF |
@@ -147,6 +181,8 @@ Para seguir el tutorial de serializadores, consulta el archivo `snippet-exercise
 - El proyecto usa `APPEND_SLASH = False` en `tutorial/settings.py`.
 - La paginación está configurada con `PageNumberPagination` y un tamaño de página de 10 elementos.
 - Las carpetas `__pycache__/` están ignoradas en `.gitignore`.
+- `ALLOWED_HOSTS` se configura mediante la variable de entorno `ALLOWED_HOSTS` (por defecto `*` para desarrollo local y contenedores).
+- En el entorno Docker de desarrollo, el código se monta como volumen, por lo que no es necesario reconstruir la imagen al modificar archivos.
 
 ## Licencia
 

@@ -44,3 +44,28 @@ makemigrate-snippets:
 migrate-snippets:
 	@echo "Run: python manage.py migrate apps.snippets"
 	python manage.py migrate apps.snippets
+
+# docker
+docker-build:
+	@echo "Run: docker compose build"
+	docker compose build
+
+docker-up:
+	@echo "Run: docker compose up -d"
+	docker compose up -d
+
+docker-logs:
+	@echo "Run: docker compose logs -f"
+	docker compose logs -f
+
+docker-down:
+	@echo "Run: docker compose down"
+	docker compose down
+
+docker-restart:
+	@echo "Run: docker compose restart"
+	docker compose restart
+
+docker-shell:
+	@echo "Run: docker compose exec web bash"
+	docker compose exec web bash
