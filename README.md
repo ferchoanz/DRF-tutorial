@@ -97,6 +97,7 @@ DRF-tutorial/
 ├── Dockerfile                  # Imagen base de la aplicación
 ├── docker-compose.yml          # Orquestación del entorno de desarrollo
 ├── .dockerignore               # Archivos ignorados por Docker
+├── create-admin.sh             # Script para crear superusuarios
 ├── manage.py
 ├── requirements.txt
 ├── makefile
@@ -157,14 +158,97 @@ make save-requirements
 # Aplicar migraciones
 make migrate
 
-# Crear un superusuario
+# Crear un superusuario (interactivo)
+./create-admin.sh
+
+# Crear un superusuario con argumentos
+./create-admin.sh admin admin@example.com
+
+# Crear un superusuario sin interacción (útil en Docker/CI)
+DJANGO_SUPERUSER_PASSWORD=admin123 ./create-admin.sh admin admin@example.com
+
+# Crear un superusuario con make (interactivo si no pasas variables)
 make create-admin
+
+# Crear un superusuario con make pasando variables
+make create-admin username=admin email=admin@example.com
+
+# Sin interacción usando make
+DJANGO_SUPERUSER_PASSWORD=admin123 make create-admin username=admin email=admin@example.com
 
 # Iniciar el servidor de desarrollo
 make run-server
 
 # Abrir el shell de Django
 make shell
+```
+
+## Crear superusuarios
+
+El proyecto incluye el script `create-admin.sh` para crear superusuarios de forma controlada. Acepta `username` y `email` como argumentos o de forma interactiva.
+
+### Uso
+
+```bash
+# Interactivo
+./create-admin.sh
+
+# Con argumentos
+./create-admin.sh <username> <email>
+```
+
+### Ejemplos
+
+```bash
+./create-admin.sh admin admin@example.com
+```
+
+Si el `username` o el `email` ya están registrados, el script muestra un error y no intenta crear el usuario:
+
+```bash
+Error: a user with username 'admin' already exists.
+```
+
+```bash
+Error: a user with email 'admin@example.com' already exists.
+```
+
+Para entornos no interactivos (Docker, CI), define la contraseña con la variable `DJANGO_SUPERUSER_PASSWORD`:
+
+```bash
+DJANGO_SUPERUSER_PASSWORD=admin123 ./create-admin.sh admin admin@example.com
+```
+
+### Con make
+
+El `makefile` también expone el comando `create-admin`. Si no pasas variables, el script te pedirá `username` y `email` por consola:
+
+```bash
+make create-admin
+```
+
+Pasando variables:
+
+```bash
+make create-admin username=admin email=admin@example.com
+```
+
+Sin interacción:
+
+```bash
+DJANGO_SUPERUSER_PASSWORD=admin123 make create-admin username=admin email=admin@example.com
+```
+
+### Con Docker
+
+```bash
+docker compose exec web ./create-admin.sh admin admin@example.com
+```
+
+O con contraseña automática:
+
+```bash
+docker compose exec web env DJANGO_SUPERUSER_PASSWORD=admin123 ./create-admin.sh admin admin@example.com
 ```
 
 ## Ejercicio de snippets

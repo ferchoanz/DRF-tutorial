@@ -20,8 +20,11 @@ migrate:
 	python manage.py migrate
 
 create-admin:
-	@echo "Run: python manage.py createsuperuser"
-	python manage.py createsuperuser --username admin --email admin@example.com
+	@if [ -n "$(username)" ] && [ -n "$(email)" ]; then \
+		./create-admin.sh "$(username)" "$(email)"; \
+	else \
+		./create-admin.sh; \
+	fi
 
 run-server:
 	@echo "Run: python manage.py runserver"
