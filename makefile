@@ -46,6 +46,7 @@ migrate-snippets:
 	python manage.py migrate apps.snippets
 
 # docker
+
 docker-build:
 	@echo "Run: docker compose build"
 	docker compose build
