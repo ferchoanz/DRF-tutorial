@@ -1,3 +1,5 @@
+PYTHON := $(shell if [ -x .venv/bin/python ]; then echo .venv/bin/python; elif command -v python3 >/dev/null 2>&1; then echo python3; elif command -v python >/dev/null 2>&1; then echo python; fi)
+
 create:
 	python3 -m venv .venv
 
@@ -16,8 +18,12 @@ install-requirements:
 	pip install -r requirements.txt
 
 migrate:
-	@echo "Run: python manage.py migrate"
-	python manage.py migrate
+	@echo "Run: $(PYTHON) manage.py migrate"
+	$(PYTHON) manage.py migrate
+
+test:
+	@echo "Run: $(PYTHON) manage.py test"
+	$(PYTHON) manage.py test
 
 create-admin:
 	@if [ -n "$(username)" ] && [ -n "$(email)" ]; then \
@@ -27,26 +33,26 @@ create-admin:
 	fi
 
 run-server:
-	@echo "Run: python manage.py runserver"
-	python manage.py runserver
+	@echo "Run: $(PYTHON) manage.py runserver"
+	$(PYTHON) manage.py runserver
 
 shell:
-	@echo "Run: python manage.py shell"
-	python manage.py shell
+	@echo "Run: $(PYTHON) manage.py shell"
+	$(PYTHON) manage.py shell
 
 # snippets
 
 startapp-snippets:
-	@echo "Run: python manage.py startapp snippets apps/snippets"
-	python manage.py startapp snippets apps/snippets
+	@echo "Run: $(PYTHON) manage.py startapp snippets apps/snippets"
+	$(PYTHON) manage.py startapp snippets apps/snippets
 
 makemigrate-snippets:
-	@echo "Run: python manage.py makemigrations apps.snippets"
-	python manage.py makemigrations apps.snippets
+	@echo "Run: $(PYTHON) manage.py makemigrations apps.snippets"
+	$(PYTHON) manage.py makemigrations apps.snippets
 
 migrate-snippets:
-	@echo "Run: python manage.py migrate apps.snippets"
-	python manage.py migrate apps.snippets
+	@echo "Run: $(PYTHON) manage.py migrate apps.snippets"
+	$(PYTHON) manage.py migrate apps.snippets
 
 # docker
 

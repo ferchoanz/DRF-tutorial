@@ -158,6 +158,9 @@ make save-requirements
 # Aplicar migraciones
 make migrate
 
+# Ejecutar tests
+make test
+
 # Crear un superusuario (interactivo)
 ./create-admin.sh
 
@@ -249,6 +252,30 @@ O con contraseña automática:
 
 ```bash
 docker compose exec web env DJANGO_SUPERUSER_PASSWORD=admin123 ./create-admin.sh admin admin@example.com
+```
+
+## Tests
+
+El proyecto incluye tests para las funcionalidades principales:
+
+- `apps/products/tests.py`: CRUD de productos, autenticación, paginación y filtros por activo.
+- `apps/snippets/tests.py`: modelo `Snippet`, `SnippetSerializer` y `SnippetModelSerializer`.
+- `tutorial/quickstart/tests.py`: endpoints de usuarios/grupos y autenticación JWT.
+
+### Ejecutar tests
+
+```bash
+# Todos los tests
+python manage.py test
+
+# Con verbose
+python manage.py test --verbosity=2
+
+# Una app específica
+python manage.py test apps.products
+
+# Mediante make
+make test
 ```
 
 ## Ejercicio de snippets
